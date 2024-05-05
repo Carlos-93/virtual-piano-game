@@ -1,6 +1,6 @@
-<p align="center"><img src="https://raw.githubusercontent.com/Carlos-93/react-weather-map/main/src/img/react.png" width="300"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Carlos-93/music-game/main/src/assets//images/react_vite_ts.png" width="400"></p>
 
-# Welcome to my Music Game
+# Welcome to my Music Piano Game
 
 Development of a musical game that should show a sequence of musical notes that the user must replicate using a virtual keyboard. 
 The game's difficulty will progressively increase with longer and more complex sequences.

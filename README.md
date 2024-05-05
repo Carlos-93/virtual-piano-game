@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/Carlos-93/music-game/main/src/images/react_vite_ts.png" width="300"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/Carlos-93/music-game/main/src/assets//images/react_vite_ts.png" width="300"></p>
 
 # Welcome to my Music Game
 

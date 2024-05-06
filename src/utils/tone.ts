@@ -1,20 +1,20 @@
 import * as Tone from "tone";
-import { KeyMapping } from "../interfaces/keyMapping";
+import { PianoKey } from "../interfaces";
 
-export const keys: KeyMapping[] = [
-    { note: "C4",  key: "A", color: "white" },
+export const keys: PianoKey[] = [
+    { note: "C4", key: "A", color: "white" },
     { note: "Db4", key: "W", color: "black" },
-    { note: "D4",  key: "S", color: "white" },
+    { note: "D4", key: "S", color: "white" },
     { note: "Eb4", key: "E", color: "black" },
-    { note: "E4",  key: "D", color: "white" },
-    { note: "F4",  key: "F", color: "white" },
+    { note: "E4", key: "D", color: "white" },
+    { note: "F4", key: "F", color: "white" },
     { note: "Gb4", key: "T", color: "black" },
-    { note: "G4",  key: "G", color: "white" },
+    { note: "G4", key: "G", color: "white" },
     { note: "Ab4", key: "Y", color: "black" },
-    { note: "A4",  key: "H", color: "white" },
+    { note: "A4", key: "H", color: "white" },
     { note: "Bb4", key: "U", color: "black" },
-    { note: "B4",  key: "J", color: "white" },
-    { note: "C5",  key: "K", color: "white" },
+    { note: "B4", key: "J", color: "white" },
+    { note: "C5", key: "K", color: "white" },
 ];
 
 const synth = new Tone.Synth().toDestination();
@@ -29,5 +29,21 @@ export function handlePressKey(event: KeyboardEvent) {
     );
     if (noteToPlay) {
         playNote(noteToPlay.note);
+        const keyElement = document.getElementById(`key-${noteToPlay.key}`);
+        if (keyElement) {
+            keyElement.classList.add(noteToPlay.color === "white" ? "bg-white-hover" : "bg-black-hover");
+        }
+    }
+}
+
+export function handleReleaseKey(event: KeyboardEvent) {
+    const noteToPlay = keys.find(
+        (item) => item.key.toLowerCase() === event.key.toLowerCase()
+    );
+    if (noteToPlay) {
+        const keyElement = document.getElementById(`key-${noteToPlay.key}`);
+        if (keyElement) {
+            keyElement.classList.remove(noteToPlay.color === "white" ? "bg-white-hover" : "bg-black-hover");
+        }
     }
 }

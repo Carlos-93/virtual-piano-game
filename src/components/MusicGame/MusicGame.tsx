@@ -2,7 +2,7 @@ import Piano from "../Piano/Piano";
 
 export default function MusicGame() {
     return (
-        <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-2xl rounded-3xl">
+        <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-2xl rounded-3xl border border-yellow-400">
             {/* Instructions */}
             <article className="flex flex-col absolute left-0 bg-white/20 w-fit px-4 py-3 rounded-xl text-sm">
                 <div className='flex flex-col items-start gap-1'>
@@ -26,20 +26,20 @@ export default function MusicGame() {
             </article>
 
             {/* Button Start Game */}
-            <button id='start' className='px-5 py-2 font-semibold mb-4 mt-8 bg-yellow-400 rounded-lg w-fit hover:bg-yellow-600 transition-all ease-in-out duration-300'>
+            <button id='start' className='px-5 py-2 font-medium mb-4 mt-8 bg-yellow-400 rounded-lg w-fit hover:bg-yellow-600 transition-all ease-in-out duration-300'>
                 <span>Start Game</span>
             </button>
 
             {/* Time y Score */}
-            <article className="flex flex-col absolute bottom-0 right-0 bg-white/20 w-fit px-8 py-2 m-4 rounded-xl text-sm text-white">
+            <article className="flex flex-col absolute bottom-0 right-0 bg-white/20 w-fit px-8 py-2 m-4 rounded-xl  text-white">
                 <div className='flex flex-row justify-between gap-6'>
                     <div className='flex flex-col items-start'>
-                        <p className='font-semibold'>Time:</p>
-                        <p id="time" className='font-medium'>00:00</p>
+                        <p className='font-medium'>Time:</p>
+                        <p id="time" className='font-medium text-yellow-400'>00:00</p>
                     </div>
                     <div className='flex flex-col items-center'>
-                        <p className='font-semibold'>Score:</p>
-                        <p id="score" className='font-medium'>0</p>
+                        <p className='font-medium'>Score:</p>
+                        <p id="score" className='font-medium text-yellow-400'>0</p>
                     </div>
                 </div>
             </article>

@@ -1,76 +1,30 @@
-// src/components/Piano.tsx
-import { useState, useEffect } from "react";
-import { keys, playNote, handlePressKey } from "../../utils/tone";
+import { useEffect } from "react";
+import { keys, playNote, handlePressKey, handleReleaseKey } from "../../utils/tone";
 
 export default function Piano() {
-    const [sequence, setSequence] = useState<string[]>([]);
-    const [userInput, setUserInput] = useState<string[]>([]);
 
     useEffect(() => {
-        // Añade el evento para manejar teclas
         document.addEventListener("keydown", handlePressKey);
+        document.addEventListener("keyup", handleReleaseKey);
+
         return () => {
             document.removeEventListener("keydown", handlePressKey);
+            document.removeEventListener("keyup", handleReleaseKey);
         };
     }, []);
 
-    // Genera un patrón aleatorio de notas
-    function generatePattern(): void {
-
-    }
-
-    // Reproduce el patrón generado
-    function playPattern(): void {
-
-    }
-
-    // Maneja la entrada del usuario
-    function handleUserInput(note: string): void {
-
-    }
-
-    /*
-    .piano-container {
-    background-color: #f0f0f0;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-
-    .piano {
-    display: flex;
-    justify-content: center;
-
-    .key {
-    width: 40px;
-    height: 150px;
-    margin: 0 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #000;
-    cursor: pointer;
-}
-
-.key.white {
-    background-color: #fff;
-}
-}
-}
-}
-    */
     return (
-        <div className=" bg-white w-full max-w-[800px] m-0 text-center">
-            <div className="flex justify-center">
+        <div className="mb-5 font-medium">
+            <div className="flex relative">
                 {keys.map((key) => (
                     <div
                         key={key.note}
-                        className={`key w-10 h-[150px] m-0 hover:bg-[#fff] flex justify-center items-center border border-black cursor-pointer
-                         ${key.color === "white" ? "bg-white" : "bg-black w-[30px] h-[100px] text-white relative z-10 -mx-5"}`}
-                        onClick={() => {
-                            playNote(key.note);
-                        }}
-                    >
+                        id={`key-${key.key}`}
+                        className={`flex justify-center items-end border border-black cursor-pointer pb-4 rounded-b-lg
+                            ${key.color === "white"
+                                ? "w-20 h-80 bg-white text-black hover:bg-white-hover"
+                                : "w-12 h-48 bg-black text-white hover:bg-black-hover relative z-10 -mx-6"}`}
+                        onClick={() => playNote(key.note)}>
                         {key.key}
                     </div>
                 ))}

@@ -20,47 +20,24 @@ body {
     scrollbar-width: none;
 }
 
-/* src/components/Piano.css */
-
-.piano-container {
-    background-color: #f0f0f0;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
+.bg-black-hover {
+    background: linear-gradient(180deg, #111111, #555555);
 }
 
-.piano {
-    display: flex;
-    justify-content: center;
+.bg-white-hover {
+    background: linear-gradient(180deg, #e0e0e0, #ffffff);
 }
 
-.key {
-    width: 40px;
-    height: 150px;
-    margin: 0 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #000;
-    cursor: pointer;
+.bg-white {
+    background: linear-gradient(180deg, #ffffff, #e0e0e0);
 }
 
-.key.white {
-    background-color: #fff;
+.hover\:bg-white-hover:hover,
+.bg-white-hover {
+    background: linear-gradient(180deg, #e0e0e0, #ffffff);
 }
 
-.key.black {
-    width: 30px;
-    height: 100px;
-    background-color: #000;
-    color: #fff;
-    position: relative;
-    z-index: 1;
-    margin-left: -15px;
-    margin-right: -15px;
-}
-
-.key:hover {
-    background-color: #ddd;
+.hover\:bg-black-hover:hover,
+.bg-black-hover {
+    background: linear-gradient(180deg, #111111, #555555);
 }

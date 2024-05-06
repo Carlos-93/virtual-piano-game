@@ -1,38 +1,37 @@
-// src/components/MusicGame/MusicGame.tsx
 import Piano from "../Piano/Piano";
 
 export default function MusicGame() {
     return (
-        <div className="flex flex-col relative justify-between items-center w-full lg:w-3/5 h-[70%] backdrop-blur-2xl rounded-3xl border border-yellow-400">
+        <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-2xl rounded-3xl">
             {/* Instructions */}
-            <section className="flex flex-col absolute left-0 bg-white/20 w-fit px-4 py-3 rounded-xl text-sm">
+            <article className="flex flex-col absolute left-0 bg-white/20 w-fit px-4 py-3 rounded-xl text-sm">
                 <div className='flex flex-col items-start gap-1'>
                     <p className='text-white font-semibold text-center mb-3'>Instructions:</p>
-                    <p className='text-white font-medium text-center'>• Use the keyboard keys to make the piano sound</p>
-                    <p className='text-white font-medium text-center'>• Press the piano keys that will appear</p>
-                    <p className='text-white font-medium text-center'>• If you press the wrong key, you will be deleted</p>
+                    <p className='text-white font-medium text-center'>• Get score by replicating the keys pressed by the computer</p>
+                    <p className='text-white font-medium text-center'>• With each correct sequence, the game increases the difficulty</p>
+                    <p className='text-white font-medium text-center'>• If you press the wrong key you will be removed from the game</p>
                 </div>
-            </section>
-
-            {/* Piano */}
-            <section className="flex-grow flex items-end justify-center w-full px-5">
-                <Piano />
-            </section>
-
-            {/* Button Start Game */}
-            <button id='start' className='px-4 py-2 font-semibold mt-3 bg-yellow-400 rounded-lg w-fit hover:bg-yellow-600 transition-all ease-in-out duration-300'>
-                <span>Start Game</span>
-            </button>
+            </article>
 
             {/* Title */}
-            <section className="flex justify-center items-center gap-3 sm:gap-5 mt-7 mb-4">
+            <article className="flex absolute right-14 justify-center items-center gap-3 sm:gap-5 mt-7 mb-4">
                 <img src="/src/assets/images/icon-music.png" className="w-8 sm:w-10 lg:w-12 xl:w-14" alt="Note of music" />
                 <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-medium text-white font-sans">Virtual Piano Game</h1>
                 <img src="/src/assets/images/icon-music.png" className="w-8 sm:w-10 lg:w-12 xl:w-14" alt="Note of music" />
-            </section>
+            </article>
+
+            {/* Piano */}
+            <article className="flex-grow flex items-end justify-center w-full px-5">
+                <Piano />
+            </article>
+
+            {/* Button Start Game */}
+            <button id='start' className='px-5 py-2 font-semibold mb-4 mt-8 bg-yellow-400 rounded-lg w-fit hover:bg-yellow-600 transition-all ease-in-out duration-300'>
+                <span>Start Game</span>
+            </button>
 
             {/* Time y Score */}
-            <section className="flex flex-col absolute bottom-0 right-0 bg-white/20 w-fit px-8 py-3 m-4 rounded-xl text-sm text-white">
+            <article className="flex flex-col absolute bottom-0 right-0 bg-white/20 w-fit px-8 py-2 m-4 rounded-xl text-sm text-white">
                 <div className='flex flex-row justify-between gap-6'>
                     <div className='flex flex-col items-start'>
                         <p className='font-semibold'>Time:</p>
@@ -43,7 +42,7 @@ export default function MusicGame() {
                         <p id="score" className='font-medium'>0</p>
                     </div>
                 </div>
-            </section>
-        </div>
+            </article>
+        </section>
     );
 }

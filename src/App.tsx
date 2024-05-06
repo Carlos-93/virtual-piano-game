@@ -1,8 +1,10 @@
-import MusicGame from "./components/MusicGame";
+import Logo from "./components/Logo/Logo";
+import MusicGame from "./components/MusicGame/MusicGame";
 
 export default function App() {
   return (
-    <main className='min-h-screen flex justify-center items-center'>
+    <main className='h-screen grid place-items-center'>
+      <Logo />
       <MusicGame />
     </main>
   );

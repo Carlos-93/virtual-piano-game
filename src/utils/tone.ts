@@ -21,6 +21,15 @@ const synth = new Tone.Synth().toDestination();
 
 export function playNote(note: string): void {
     synth.triggerAttackRelease(note, "8n");
+
+    const keyElement = document.getElementById(`key-${note}`);
+    if (keyElement) {
+        keyElement.classList.add(keys.find((item) => item.note === note)?.color === "white" ? "bg-white-hover" : "bg-black-hover");
+
+        setTimeout(() => {
+            keyElement.classList.remove(keys.find((item) => item.note === note)?.color === "white" ? "bg-white-hover" : "bg-black-hover");
+        }, 500);
+    }
 }
 
 export function handlePressKey(event: KeyboardEvent) {

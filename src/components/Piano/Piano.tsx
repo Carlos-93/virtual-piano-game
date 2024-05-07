@@ -19,7 +19,7 @@ export default function Piano() {
                 {keys.map((key) => (
                     <div
                         key={key.note}
-                        id={`key-${key.key}`}
+                        id={`key-${key.note}`}
                         className={`flex justify-center items-end border border-black cursor-pointer pb-4 rounded-b-lg
                             ${key.color === "white"
                                 ? "w-20 h-80 bg-white text-black hover:bg-white-hover"

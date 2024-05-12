@@ -1,17 +1,17 @@
+// Lógica del juego Virtual Piano Game
+
+// 1. Generar una secuencia aleatoria 4 teclas (Notas musicales)
+// 2. Reproducir la secuencia de teclas generada
+// 3. Esperar a que el usuario presione las teclas correctas en el mismo orden
+// 4. Cada ronda completada con éxito aumenta la dificultad del juego (Velocidad de reproducción de la secuencia)
+// 5. Si el usuario presiona la tecla correcta, aumentamos la puntuación a 50 puntos y continuamos con la siguiente ronda (Secuencia anterior + 1 tecla)
+// 6. Si el usuario presiona una tecla incorrecta, detenemos el juego, mostramos un modal con la puntuación final junto con un botón para cerrar el modal
+
 import { useEffect, useState, useRef } from "react";
-import Piano from "../Piano/Piano";
 import { keys, playNote } from "../../utils/tone";
+import Piano from "../Piano/Piano";
 
 export default function MusicGame() {
-
-    // Lógica del juego Virtual Piano Game
-
-    // 1. Generar una secuencia aleatoria 4 teclas (Notas musicales)
-    // 2. Reproducir la secuencia de teclas generada
-    // 3. Esperar a que el usuario presione las teclas correctas en el mismo orden
-    // 4. Cada ronda completada con éxito aumenta la dificultad del juego (Velocidad de reproducción de la secuencia)
-    // 5. Si el usuario presiona la tecla correcta, aumentamos la puntuación a 50 puntos y continuamos con la siguiente ronda (Secuencia anterior + 1 tecla)
-    // 6. Si el usuario presiona una tecla incorrecta, detenemos el juego, mostramos un modal con la puntuación final junto con un botón para cerrar el modal
 
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
@@ -104,7 +104,7 @@ export default function MusicGame() {
 
             {/* Time y Score */}
             <article className="flex flex-col absolute bottom-0 right-0 bg-white/20 w-fit px-8 py-2 m-4 rounded-xl  text-white">
-                <div className='flex flex-row justify-between gap-6'>
+                <div className='flex flex-row justify-between gap-4'>
                     <div className='flex flex-col items-start min-w-20'>
                         <p className='font-medium'>Time:</p>
                         <p id="time" className='font-medium text-yellow-400'>{time} Seg</p>

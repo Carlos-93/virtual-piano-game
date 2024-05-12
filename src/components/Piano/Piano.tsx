@@ -1,34 +1,44 @@
-import { useEffect } from "react";
-import { keys, playNote, handlePressKey, handleReleaseKey } from "../../utils/tone";
+import { useEffect, useCallback } from "react";
+import { keys, playNote, handleKeyPress, handleKeyRelease } from "../../utils/tone";
 
 export default function Piano() {
-
-    useEffect(() => {
-        document.addEventListener("keydown", handlePressKey);
-        document.addEventListener("keyup", handleReleaseKey);
-
-        return () => {
-            document.removeEventListener("keydown", handlePressKey);
-            document.removeEventListener("keyup", handleReleaseKey);
-        };
+    const handlePressKey = useCallback((event: KeyboardEvent) => {
+        handleKeyPress(event, playNote);
     }, []);
 
+    const handleReleaseKey = useCallback((event: KeyboardEvent) => {
+        handleKeyRelease(event);
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener("keydown", handlePressKey);
+        window.addEventListener("keyup", handleReleaseKey);
+
+        return () => {
+            window.removeEventListener("keydown", handlePressKey);
+            window.removeEventListener("keyup", handleReleaseKey);
+        };
+    }, [handlePressKey, handleReleaseKey]);
+
     return (
-        <div className="mb-5 font-medium">
-            <div className="flex relative">
+        <section className="mb-5 font-medium">
+            <article className="flex relative">
                 {keys.map((key) => (
-                    <div
+                    <button
+                        type="button"
                         key={key.note}
                         id={`key-${key.note}`}
                         className={`flex justify-center items-end border border-black cursor-pointer pb-4 rounded-b-lg
                             ${key.color === "white"
                                 ? "w-20 h-80 bg-white text-black hover:bg-white-hover"
                                 : "w-12 h-48 bg-black text-white hover:bg-black-hover relative z-10 -mx-6"}`}
-                        onClick={() => playNote(key.note)}>
+                        onClick={() => playNote(key.note)}
+                        aria-label={`Play note ${key.note}`}
+                    >
                         {key.key}
-                    </div>
+                    </button>
                 ))}
-            </div>
-        </div>
+            </article>
+        </section>
     );
 }

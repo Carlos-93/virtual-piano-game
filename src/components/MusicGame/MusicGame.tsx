@@ -18,8 +18,7 @@ export default function MusicGame() {
     // Función para iniciar el juego
     function startGame() {
         setGameActive(true);
-        setTime(0);
-        setScore(0);
+        clearGame();
         setPlaybackSpeed(1000);
         currentPosition.current = 0;
         const initialSequence = generateSequence(4);
@@ -30,13 +29,18 @@ export default function MusicGame() {
     // Función para detener el juego
     function stopGame() {
         setGameActive(false);
-        setTime(0);
-        setScore(0);
+        clearGame();
         setSequence([]);
         currentPosition.current = 0;
         setModalOpen(false);
         timeoutRefs.current.forEach(clearTimeout);
         timeoutRefs.current = [];
+    }
+
+    // Función para reiniciar el juego
+    function clearGame() {
+        setTime(0);
+        setScore(0);
     }
 
     // Función para generar una secuencia de notas aleatorias
@@ -46,6 +50,8 @@ export default function MusicGame() {
 
     // Función para reproducir una secuencia de notas
     function playSequence(sequence: string[], speed: number) {
+        console.log(sequence.map(note => keys.find(k => k.note === note)?.key).join(', '));
+
         let index = 0;
         const playNextNote = () => {
             if (index < sequence.length) {
@@ -78,6 +84,7 @@ export default function MusicGame() {
                 if (currentPosition.current === sequence.length - 1) {
                     const newSequence = [...sequence, generateSequence(1)[0]];
                     const newSpeed = Math.max(100, playbackSpeed * 0.95);
+                    console.log(newSpeed);
                     setTimeout(() => {
                         setPlaybackSpeed(newSpeed);
                         setSequence(newSequence);

@@ -12,6 +12,7 @@ export default function MusicGame() {
     const [modalOpen, setModalOpen] = useState(false);
     const [score, setScore] = useState(0);
     const [time, setTime] = useState(0);
+
     const timeoutRefs = useRef<number[]>([]);
     const currentPosition = useRef(0);
 
@@ -50,8 +51,6 @@ export default function MusicGame() {
 
     // Función para reproducir una secuencia de notas
     function playSequence(sequence: string[], speed: number) {
-        console.log(sequence.map(note => keys.find(k => k.note === note)?.key).join(', '));
-
         let index = 0;
         const playNextNote = () => {
             if (index < sequence.length) {
@@ -80,11 +79,11 @@ export default function MusicGame() {
             const key = keys.find(k => k.key.toLowerCase() === event.key.toLowerCase());
 
             if (key && sequence[currentPosition.current] === key.note) {
-                setScore((currentScore) => currentScore + 50);
+                setScore((currentScore) => currentScore + 10);
                 if (currentPosition.current === sequence.length - 1) {
                     const newSequence = [...sequence, generateSequence(1)[0]];
                     const newSpeed = Math.max(100, playbackSpeed * 0.95);
-                    console.log(newSpeed);
+
                     setTimeout(() => {
                         setPlaybackSpeed(newSpeed);
                         setSequence(newSequence);

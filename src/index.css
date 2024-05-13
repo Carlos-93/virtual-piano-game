@@ -32,6 +32,10 @@ body {
     background: linear-gradient(180deg, #ffffff, #e0e0e0);
 }
 
+.bg-key-error {
+    background: linear-gradient(180deg, #ff0000, #ffffff);
+}
+
 .hover\:bg-white-hover:hover,
 .bg-white-hover {
     background: linear-gradient(180deg, #e0e0e0, #ffffff);

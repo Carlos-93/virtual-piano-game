@@ -1,15 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { keys, playNote } from "../../utils/tone";
-import Piano from "../Piano/Piano";
-import Modal from "../Modal/Modal";
+import Piano from "../piano/Piano";
+import Modal from "../modal/Modal";
 
 export default function MusicGame() {
+
+    // Constantes y estados del juego
     const [sequence, setSequence] = useState<string[]>([]);
     const [playbackSpeed, setPlaybackSpeed] = useState(1000);
     const [gameActive, setGameActive] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [score, setScore] = useState(0);
     const [time, setTime] = useState(0);
+    const timeoutRefs = useRef<number[]>([]);
     const currentPosition = useRef(0);
 
     // Función para iniciar el juego
@@ -21,7 +24,7 @@ export default function MusicGame() {
         currentPosition.current = 0;
         const initialSequence = generateSequence(4);
         setSequence(initialSequence);
-        playSequence(initialSequence, 1000);
+        setTimeout(() => { playSequence(initialSequence, 1000); }, 1500);
     }
 
     // Función para detener el juego
@@ -32,6 +35,8 @@ export default function MusicGame() {
         setSequence([]);
         currentPosition.current = 0;
         setModalOpen(false);
+        timeoutRefs.current.forEach(clearTimeout);
+        timeoutRefs.current = [];
     }
 
     // Función para generar una secuencia de notas aleatorias
@@ -41,9 +46,15 @@ export default function MusicGame() {
 
     // Función para reproducir una secuencia de notas
     function playSequence(sequence: string[], speed: number) {
-        sequence.forEach((note, index) => {
-            setTimeout(() => playNote(note), index * speed);
-        });
+        let index = 0;
+        const playNextNote = () => {
+            if (index < sequence.length) {
+                playNote(sequence[index]);
+                timeoutRefs.current.push(window.setTimeout(playNextNote, speed));
+                index++;
+            }
+        };
+        playNextNote();
     }
 
     // Hook para manejar el tiempo del juego
@@ -78,6 +89,8 @@ export default function MusicGame() {
                 }
             } else if (key) {
                 setGameActive(false);
+                timeoutRefs.current.forEach(clearTimeout);
+                timeoutRefs.current = [];
                 setModalOpen(true);
             }
         }
@@ -110,7 +123,7 @@ export default function MusicGame() {
             </article>
 
             {/* Buttons */}
-            <button onClick={gameActive ? stopGame : startGame} className={`font-semibold py-2.5 px-6 rounded-lg mt-6 mb-8 transition-all ease-in-out duration-300
+            <button onClick={gameActive ? stopGame : startGame} className={`font-semibold py-2.5 px-6 rounded-lg mt-6 mb-4 transition-all ease-in-out duration-300
                 ${gameActive
                     ? 'bg-red-500 hover:bg-red-600 text-white'
                     : 'bg-yellow-400 hover:bg-yellow-600'}`}>

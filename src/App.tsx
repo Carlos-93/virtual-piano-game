@@ -1,5 +1,5 @@
-import Logo from "./components/Logo/Logo";
-import MusicGame from "./components/MusicGame/MusicGame";
+import Logo from "./components/logo/Logo";
+import MusicGame from "./components/musicGame/MusicGame";
 
 export default function App() {
   return (

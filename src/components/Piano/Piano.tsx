@@ -21,7 +21,7 @@ export default function Piano() {
     }, [handlePressKey, handleReleaseKey]);
 
     return (
-        <section className="mb-5 font-medium">
+        <section className="mb-6 font-medium">
             <article className="flex relative">
                 {keys.map((key) => (
                     <button

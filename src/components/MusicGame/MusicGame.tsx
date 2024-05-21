@@ -105,9 +105,9 @@ export default function MusicGame() {
     }, [sequence, playbackSpeed, gameActive, score]);
 
     return (
-        <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-xl rounded-3xl border border-yellow-400">
+        <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-xl rounded-3xl border border-yellow-400 p-5">
             {/* Instructions */}
-            <article className="flex flex-col absolute left-0 bg-white/20 w-fit px-4 py-3 rounded-xl text-sm">
+            <article className="flex flex-col absolute left-5 bg-white/20 w-fit px-4 py-3 rounded-xl text-sm">
                 <div className='flex flex-col items-start gap-1'>
                     <p className='text-white font-semibold text-center mb-3'>Instructions:</p>
                     <p className='text-white font-medium text-center'>• Get score by replicating the keys pressed by the computer</p>
@@ -129,7 +129,7 @@ export default function MusicGame() {
             </article>
 
             {/* Buttons */}
-            <button onClick={gameActive ? stopGame : startGame} className={`font-semibold py-2.5 px-6 rounded-lg mt-6 mb-4 transition-all ease-in-out duration-300
+            <button onClick={gameActive ? stopGame : startGame} className={`font-semibold py-2.5 px-6 rounded-lg mt-3 transition-all ease-in-out duration-300
                 ${gameActive
                     ? 'bg-red-500 hover:bg-red-600 text-white'
                     : 'bg-yellow-400 hover:bg-yellow-600'}`}>

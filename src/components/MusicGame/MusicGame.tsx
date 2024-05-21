@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { keys, playNote } from "../../utils/tone";
+import axios from "axios";
 import Piano from "../piano/Piano";
 import Modal from "../modal/Modal";
 
@@ -15,6 +16,8 @@ export default function MusicGame() {
 
     const timeoutRefs = useRef<number[]>([]);
     const currentPosition = useRef(0);
+    const params = new URLSearchParams(window.location.search);
+    const user_id = params.get('user_id');
 
     // Función para iniciar el juego
     function startGame() {
@@ -103,6 +106,22 @@ export default function MusicGame() {
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [sequence, playbackSpeed, gameActive, score]);
+
+    const processGameResult = async () => {
+        try {
+            const response = await axios.post('http://localhost:3001/api/music-game', {
+                score: score,
+                user_id: user_id,
+                time: time
+            });
+            console.log("Resultado del juego", response.data);
+        } catch (error) {
+            console.error("Error al procesar el resultado del juego", error);
+
+        } finally {
+            window.location.href = 'http://127.0.0.1:8000/music-game';
+        }
+    }
 
     return (
         <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-xl rounded-3xl border border-yellow-400 p-5">

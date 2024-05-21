@@ -152,8 +152,8 @@ export default function MusicGame() {
 
             {/* Modal */}
             <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-                <p className="text-xl font-semibold">¡ Game Over !</p>
-                <p className="font-medium">Your score: {score} Points</p>
+                <p className="text-3xl font-semibold">¡ Game Over !</p>
+                <p className="font-medium text-lg">Your score: <span className='text-yellow-600'>{score} Points</span></p>
             </Modal>
         </section>
     );

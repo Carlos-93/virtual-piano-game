@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { keys, playNote } from "../../utils/tone";
 import axios from "axios";
 import Piano from "../piano/Piano";
@@ -75,6 +75,22 @@ export default function MusicGame() {
         }
     }, [gameActive]);
 
+    // Memoizar la función processGameResult
+    const processGameResult = useCallback(async () => {
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/api/game-results', {
+                score: score,
+                user_id: user_id,
+                time: time,
+            });
+            console.log('Resultado guardado:', response.data.message);
+        } catch (error) {
+            console.error('Error al enviar el resultado del juego:', error);
+        } finally {
+            setModalOpen(true); // Abre el modal en lugar de redirigir directamente
+        }
+    }, [score, user_id, time]);
+
     // Hook para manejar el evento de teclado y verificar si la nota presionada es correcta
     useEffect(() => {
         function handleKeyPress(event: KeyboardEvent) {
@@ -101,27 +117,18 @@ export default function MusicGame() {
                 timeoutRefs.current.forEach(clearTimeout);
                 timeoutRefs.current = [];
                 setModalOpen(true);
+                processGameResult();
             }
         }
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [sequence, playbackSpeed, gameActive, score]);
+    }, [sequence, playbackSpeed, gameActive, score, processGameResult]);
 
-    const processGameResult = async () => {
-        try {
-            const response = await axios.post('http://localhost:3001/api/music-game', {
-                score: score,
-                user_id: user_id,
-                time: time
-            });
-            console.log("Resultado del juego", response.data);
-        } catch (error) {
-            console.error("Error al procesar el resultado del juego", error);
-
-        } finally {
-            window.location.href = 'http://127.0.0.1:8000/music-game';
-        }
-    }
+    // Función para manejar el cierre del modal y redirección
+    const handleCloseModalAndRedirect = () => {
+        setModalOpen(false);
+        window.location.href = 'http://127.0.0.1:8000/games';
+    };
 
     return (
         <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-xl rounded-3xl border border-yellow-400 p-5">
@@ -170,7 +177,7 @@ export default function MusicGame() {
             </article>
 
             {/* Modal */}
-            <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
+            <Modal isOpen={modalOpen} onClose={handleCloseModalAndRedirect}>
                 <p className="text-3xl font-semibold">¡ Game Over !</p>
                 <p className="font-medium text-lg">Your score: <span className='text-yellow-600'>{score} Points</span></p>
             </Modal>

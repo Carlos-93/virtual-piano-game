@@ -1,6 +1,6 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Logo from "./components/logo/Logo";
 import MusicGame from "./components/musicGame/MusicGame";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 export default function App() {
 

@@ -75,7 +75,7 @@ export default function MusicGame() {
         }
     }, [gameActive]);
 
-    // Memoizar la función processGameResult
+    // Funcion asincrona para procesar el resultado del juego
     const processGameResult = useCallback(async () => {
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/game-results', {
@@ -87,7 +87,7 @@ export default function MusicGame() {
         } catch (error) {
             console.error('Error al enviar el resultado del juego:', error);
         } finally {
-            setModalOpen(true); // Abre el modal en lugar de redirigir directamente
+            setModalOpen(true);
         }
     }, [score, user_id, time]);
 
@@ -125,10 +125,10 @@ export default function MusicGame() {
     }, [sequence, playbackSpeed, gameActive, score, processGameResult]);
 
     // Función para manejar el cierre del modal y redirección
-    const handleCloseModalAndRedirect = () => {
+    function handleCloseModalAndRedirect() {
         setModalOpen(false);
         window.location.href = 'http://127.0.0.1:8000/games';
-    };
+    }
 
     return (
         <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-xl rounded-3xl border border-yellow-400 p-5">

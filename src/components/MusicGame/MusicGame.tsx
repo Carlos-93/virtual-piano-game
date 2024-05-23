@@ -6,7 +6,7 @@ import Modal from "../modal/Modal";
 
 export default function MusicGame() {
 
-    // Constantes y estados del juego
+    // State Variables
     const [sequence, setSequence] = useState<string[]>([]);
     const [playbackSpeed, setPlaybackSpeed] = useState(1000);
     const [gameActive, setGameActive] = useState(false);
@@ -14,13 +14,17 @@ export default function MusicGame() {
     const [score, setScore] = useState(0);
     const [time, setTime] = useState(0);
 
+    // Refs Variables
     const timeoutRefs = useRef<number[]>([]);
     const currentPosition = useRef(0);
+
+    // Get the user_id from the URL
     const params = new URLSearchParams(window.location.search);
     const user_id = params.get('user_id');
+    const game_id = 1;
 
-    // Función para iniciar el juego
-    function startGame() {
+    // Functions
+    const startGame = () => {
         setGameActive(true);
         clearGame();
         setPlaybackSpeed(1000);
@@ -30,8 +34,7 @@ export default function MusicGame() {
         setTimeout(() => { playSequence(initialSequence, 1000); }, 1500);
     }
 
-    // Función para detener el juego
-    function stopGame() {
+    const stopGame = () => {
         setGameActive(false);
         clearGame();
         setSequence([]);
@@ -41,19 +44,16 @@ export default function MusicGame() {
         timeoutRefs.current = [];
     }
 
-    // Función para reiniciar el juego
-    function clearGame() {
+    const clearGame = () => {
         setTime(0);
         setScore(0);
     }
 
-    // Función para generar una secuencia de notas aleatorias
-    function generateSequence(length: number) {
+    const generateSequence = (length: number) => {
         return Array.from({ length }, () => keys[Math.floor(Math.random() * keys.length)].note);
     }
 
-    // Función para reproducir una secuencia de notas
-    function playSequence(sequence: string[], speed: number) {
+    const playSequence = (sequence: string[], speed: number) => {
         let index = 0;
         const playNextNote = () => {
             if (index < sequence.length) {
@@ -65,7 +65,28 @@ export default function MusicGame() {
         playNextNote();
     }
 
-    // Hook para manejar el tiempo del juego
+    const closeModalAndRedirect = () => {
+        setModalOpen(false);
+        window.location.href = 'http://127.0.0.1:8000/games';
+    }
+
+    // Callbacks
+    const processGameResult = useCallback(async () => {
+        try {
+            await axios.post('http://127.0.0.1:8000/api/game-results', {
+                score: score,
+                user_id: user_id,
+                game_id: game_id,
+                time: time,
+            });
+        } catch (error) {
+            console.error('Error al enviar el resultado del juego:', error);
+        } finally {
+            setModalOpen(true);
+        }
+    }, [score, user_id, game_id, time]);
+
+    // Effects
     useEffect(() => {
         if (gameActive) {
             const timerId = setInterval(() => {
@@ -75,23 +96,6 @@ export default function MusicGame() {
         }
     }, [gameActive]);
 
-    // Funcion asincrona para procesar el resultado del juego
-    const processGameResult = useCallback(async () => {
-        try {
-            const response = await axios.post('http://127.0.0.1:8000/api/game-results', {
-                score: score,
-                user_id: user_id,
-                time: time,
-            });
-            console.log('Resultado guardado:', response.data.message);
-        } catch (error) {
-            console.error('Error al enviar el resultado del juego:', error);
-        } finally {
-            setModalOpen(true);
-        }
-    }, [score, user_id, time]);
-
-    // Hook para manejar el evento de teclado y verificar si la nota presionada es correcta
     useEffect(() => {
         function handleKeyPress(event: KeyboardEvent) {
             if (!gameActive) return;
@@ -124,12 +128,7 @@ export default function MusicGame() {
         return () => window.removeEventListener('keydown', handleKeyPress);
     }, [sequence, playbackSpeed, gameActive, score, processGameResult]);
 
-    // Función para manejar el cierre del modal y redirección
-    function handleCloseModalAndRedirect() {
-        setModalOpen(false);
-        window.location.href = 'http://127.0.0.1:8000/games';
-    }
-
+    // Render the component
     return (
         <section className="flex flex-col relative items-center w-full lg:w-3/5 h-[37rem] backdrop-blur-xl rounded-3xl border border-yellow-400 p-5">
             {/* Instructions */}
@@ -149,7 +148,7 @@ export default function MusicGame() {
                 <img src="/src/assets/images/icon-music.png" className="w-8 sm:w-10 lg:w-12 xl:w-14" alt="Note of music" />
             </article>
 
-            {/* Piano */}
+            {/* Piano Component */}
             <article className="flex-grow flex items-end justify-center w-full px-5">
                 <Piano />
             </article>
@@ -176,8 +175,8 @@ export default function MusicGame() {
                 </div>
             </article>
 
-            {/* Modal */}
-            <Modal isOpen={modalOpen} onClose={handleCloseModalAndRedirect}>
+            {/* Modal Component */}
+            <Modal isOpen={modalOpen} onClose={closeModalAndRedirect}>
                 <p className="text-3xl font-semibold">¡ Game Over !</p>
                 <p className="font-medium text-lg">Your score: <span className='text-yellow-600'>{score} Points</span></p>
             </Modal>

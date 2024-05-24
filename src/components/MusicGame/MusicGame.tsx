@@ -5,7 +5,6 @@ import Piano from "../piano/Piano";
 import Modal from "../modal/Modal";
 
 export default function MusicGame() {
-
     // State Variables
     const [sequence, setSequence] = useState<string[]>([]);
     const [playbackSpeed, setPlaybackSpeed] = useState(1000);
@@ -140,19 +139,16 @@ export default function MusicGame() {
                     <p className='text-white font-medium text-center'>• If you press the wrong key you will be removed from the game</p>
                 </div>
             </article>
-
             {/* Title */}
             <article className="flex absolute right-14 justify-center items-center gap-3 sm:gap-5 mt-7 mb-4">
                 <img src="/src/assets/images/icon-music.png" className="w-8 sm:w-10 lg:w-12 xl:w-14" alt="Note of music" />
                 <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-medium text-white font-sans">Virtual Piano Game</h1>
                 <img src="/src/assets/images/icon-music.png" className="w-8 sm:w-10 lg:w-12 xl:w-14" alt="Note of music" />
             </article>
-
             {/* Piano Component */}
             <article className="flex-grow flex items-end justify-center w-full px-5">
                 <Piano />
             </article>
-
             {/* Buttons */}
             <button onClick={gameActive ? stopGame : startGame} className={`font-semibold py-2.5 px-6 rounded-lg mt-3 transition-all ease-in-out duration-300
                 ${gameActive
@@ -160,7 +156,6 @@ export default function MusicGame() {
                     : 'bg-yellow-400 hover:bg-yellow-600'}`}>
                 {gameActive ? 'Stop Game' : 'Start Game'}
             </button>
-
             {/* Time y Score */}
             <article className="flex flex-col absolute bottom-0 right-0 bg-white/20 w-fit px-8 py-2 m-4 rounded-xl text-white">
                 <div className='flex flex-row justify-between gap-4'>
@@ -174,7 +169,6 @@ export default function MusicGame() {
                     </div>
                 </div>
             </article>
-
             {/* Modal Component */}
             <Modal isOpen={modalOpen} onClose={closeModalAndRedirect}>
                 <p className="text-3xl font-semibold">¡ Game Over !</p>

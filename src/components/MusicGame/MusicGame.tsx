@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { keys, playNote } from "../../utils/tone";
-import axios from "axios";
 import Piano from "../piano/Piano";
 import Modal from "../modal/Modal";
+import processGameResult from "../../services/api";
 
 export default function MusicGame() {
     // State Variables
@@ -70,14 +70,9 @@ export default function MusicGame() {
     }
 
     // Callbacks
-    const processGameResult = useCallback(async () => {
+    const processResult = useCallback(async () => {
         try {
-            await axios.post('http://127.0.0.1:8000/api/game-results', {
-                score: score,
-                user_id: user_id,
-                game_id: game_id,
-                time: time,
-            });
+            await processGameResult(score, user_id as string, game_id.toString(), time.toString());
         } catch (error) {
             console.error('Error al enviar el resultado del juego:', error);
         } finally {
@@ -120,12 +115,12 @@ export default function MusicGame() {
                 timeoutRefs.current.forEach(clearTimeout);
                 timeoutRefs.current = [];
                 setModalOpen(true);
-                processGameResult();
+                processResult();
             }
         }
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [sequence, playbackSpeed, gameActive, score, processGameResult]);
+    }, [sequence, playbackSpeed, gameActive, score, processResult]);
 
     // Render the component
     return (

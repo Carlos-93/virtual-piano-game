@@ -1,5 +1,5 @@
-import * as Tone from "tone";
 import { PianoKey } from "../interfaces";
+import * as Tone from "tone";
 
 export const keys: PianoKey[] = [
     { note: "C4",  key: "A", color: "white" },
